@@ -1,3 +1,4 @@
 const { healthRouter } = require('./health.route');
+const { categoryRouter } = require('./category.route');
 
-module.exports = { healthRouter };
+module.exports = { healthRouter, categoryRouter };
