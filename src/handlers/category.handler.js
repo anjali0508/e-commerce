@@ -25,11 +25,15 @@ const getFeatures = async (req, res) => {
 };
 
 const getItems = async (req, res) => {
-  const {
-    category, color, size, brand,
-  } = req.query;
-  const features = await categoryService.getItems(category, color, size, brand);
-  res.status(200).json(features);
+  try {
+    const {
+      category, color, size, brand,
+    } = req.query;
+    const items = await categoryService.getItems(category, color, size, brand);
+    return res.status(200).json(items);
+  } catch (error) {
+    return res.status(404).json({ message: 'Category doesnt exist' });
+  }
 };
 
 module.exports = { createCategory, getFeatures, getItems };
