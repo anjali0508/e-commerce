@@ -2,8 +2,8 @@ const { default: axios } = require('axios');
 const categoryService = require('./category.service');
 const { Category, Item } = require('../models');
 
-describe('Create Category service when the category doesnt exist', () => {
-  it('should return a list of created category when db execution is successful', async (done) => {
+describe('Create Category service', () => {
+  it('should return a list of created category when category doesnt exisst when db execution is successful', async (done) => {
     const axiosResponse = {
       data: {
         itemMetadata: ['lala'],
@@ -35,39 +35,37 @@ describe('Create Category service when the category doesnt exist', () => {
   });
 });
 
-describe('Create Category service when the category exist', () => {
-  it('should return a list of created category when db execution is successful', async (done) => {
-    const axiosResponse = {
-      data: {
-        itemMetadata: ['lala'],
-      },
-      features: ['lala'],
-    };
-    const mockResponse = {
-      dataValues:
+it('should return updated category by updating the existing categories with new values', async (done) => {
+  const axiosResponse = {
+    data: {
+      itemMetadata: ['lala'],
+    },
+    features: ['lala'],
+  };
+  const mockResponse = {
+    dataValues:
         {
           id: 1,
           craeted_at: '2021-02-22T10:37:11.911Z',
           updated_at: '2021-02-22T10:37:11.911Z',
         },
-    };
-    jest.spyOn(Item, 'findAll').mockResolvedValue(mockResponse);
-    jest.spyOn(Category, 'destroy').mockResolvedValue(mockResponse);
-    jest.spyOn(Item, 'destroy').mockResolvedValue(mockResponse);
-    jest.spyOn(axios, 'get').mockResolvedValue(axiosResponse);
-    jest.spyOn(axios, 'get').mockResolvedValue(axiosResponse);
-    jest.spyOn(Promise, 'all').mockResolvedValue([{ features: 'lala' }]);
+  };
+  jest.spyOn(Item, 'findAll').mockResolvedValue(mockResponse);
+  jest.spyOn(Category, 'destroy').mockResolvedValue(mockResponse);
+  jest.spyOn(Item, 'destroy').mockResolvedValue(mockResponse);
+  jest.spyOn(axios, 'get').mockResolvedValue(axiosResponse);
+  jest.spyOn(axios, 'get').mockResolvedValue(axiosResponse);
+  jest.spyOn(Promise, 'all').mockResolvedValue([{ features: 'lala' }]);
 
-    const createSpy = jest.spyOn(Category, 'create');
-    const itemCreateSpy = jest.spyOn(Item, 'create');
+  const createSpy = jest.spyOn(Category, 'create');
+  const itemCreateSpy = jest.spyOn(Item, 'create');
 
-    createSpy.mockResolvedValue(mockResponse);
-    itemCreateSpy.mockResolvedValue(mockResponse);
+  createSpy.mockResolvedValue(mockResponse);
+  itemCreateSpy.mockResolvedValue(mockResponse);
 
-    const response = await categoryService.createCategory('phone');
-    expect(response).toEqual(mockResponse.dataValues);
-    done();
-  });
+  const response = await categoryService.createCategory('phone');
+  expect(response).toEqual(mockResponse.dataValues);
+  done();
 });
 
 describe('getFeatures Service', () => {

@@ -1,5 +1,5 @@
-const quoteService = require('../services/category.service');
-const quoteHandler = require('./category.handler');
+const categoryService = require('../services/category.service');
+const categoryHandler = require('./category.handler');
 
 describe('Create category & Item handler', () => {
   afterEach(() => {
@@ -10,25 +10,25 @@ describe('Create category & Item handler', () => {
       content: 'Keep smiling lol',
       id: 1,
     };
-    jest.spyOn(quoteService, 'createCategory').mockResolvedValue(mockResponseValue);
+    jest.spyOn(categoryService, 'createCategory').mockResolvedValue(mockResponseValue);
     const mockResponse = {
       status: jest.fn(() => mockResponse),
       json: jest.fn(),
     };
     const mockRequest = { params: { category: 'phone' } };
-    await quoteHandler.createCategory(mockRequest, mockResponse);
+    await categoryHandler.createCategory(mockRequest, mockResponse);
     expect(mockResponse.status).toHaveBeenCalledWith(200);
     expect(mockResponse.json).toHaveBeenCalledWith(mockResponseValue);
-    expect(quoteService.createCategory).toHaveBeenCalledWith('phone');
+    expect(categoryService.createCategory).toHaveBeenCalledWith('phone');
     done();
   });
   it('should set a status code of 404 along with created error message', async (done) => {
-    jest.spyOn(quoteService, 'createCategory').mockImplementation(() => { throw new Error('error'); });
+    jest.spyOn(categoryService, 'createCategory').mockImplementation(() => { throw new Error('error'); });
     const mockResponse = {
       status: jest.fn(() => mockResponse),
       json: jest.fn(),
     };
-    await quoteHandler.createCategory(null, mockResponse);
+    await categoryHandler.createCategory(null, mockResponse);
     expect(mockResponse.status).toHaveBeenCalledWith(404);
     done();
   });
@@ -44,25 +44,25 @@ describe('Get features of given handler', () => {
         color: 'blue',
       },
     };
-    jest.spyOn(quoteService, 'getFeatures').mockResolvedValue(mockResponseValue);
+    jest.spyOn(categoryService, 'getFeatures').mockResolvedValue(mockResponseValue);
     const mockResponse = {
       status: jest.fn(() => mockResponse),
       json: jest.fn(),
     };
     const mockRequest = { query: { category: 'phone' } };
-    await quoteHandler.getFeatures(mockRequest, mockResponse);
+    await categoryHandler.getFeatures(mockRequest, mockResponse);
     expect(mockResponse.status).toHaveBeenCalledWith(200);
     expect(mockResponse.json).toHaveBeenCalledWith(mockResponseValue);
-    expect(quoteService.getFeatures).toHaveBeenCalledWith('phone');
+    expect(categoryService.getFeatures).toHaveBeenCalledWith('phone');
     done();
   });
   it('should set a status code of 404 along with created error message', async (done) => {
-    jest.spyOn(quoteService, 'getFeatures').mockImplementation(() => { throw new Error('error'); });
+    jest.spyOn(categoryService, 'getFeatures').mockImplementation(() => { throw new Error('error'); });
     const mockResponse = {
       status: jest.fn(() => mockResponse),
       json: jest.fn(),
     };
-    await quoteHandler.getFeatures(null, mockResponse);
+    await categoryHandler.getFeatures(null, mockResponse);
     expect(mockResponse.status).toHaveBeenCalledWith(404);
     done();
   });
@@ -76,7 +76,7 @@ describe('Get items of given category, color, brand, size', () => {
     const mockResponseValue = {
       name: 'Iphone',
     };
-    jest.spyOn(quoteService, 'getItems').mockResolvedValue(mockResponseValue);
+    jest.spyOn(categoryService, 'getItems').mockResolvedValue(mockResponseValue);
     const mockResponse = {
       status: jest.fn(() => mockResponse),
       json: jest.fn(),
@@ -86,20 +86,20 @@ describe('Get items of given category, color, brand, size', () => {
         category: 'phone', color: 'blue', brand: 'vivo', size: '20',
       },
     };
-    await quoteHandler.getItems(mockRequest, mockResponse);
+    await categoryHandler.getItems(mockRequest, mockResponse);
     expect(mockResponse.status).toHaveBeenCalledWith(200);
     expect(mockResponse.json).toHaveBeenCalledWith(mockResponseValue);
-    expect(quoteService.getItems).toHaveBeenCalledWith('phone', 'blue', '20', 'vivo');
+    expect(categoryService.getItems).toHaveBeenCalledWith('phone', 'blue', '20', 'vivo');
     done();
   });
 
   it('should set a status code of 404 along with created error message', async (done) => {
-    jest.spyOn(quoteService, 'getItems').mockImplementation(() => { throw new Error('error'); });
+    jest.spyOn(categoryService, 'getItems').mockImplementation(() => { throw new Error('error'); });
     const mockResponse = {
       status: jest.fn(() => mockResponse),
       json: jest.fn(),
     };
-    await quoteHandler.getItems(null, mockResponse);
+    await categoryHandler.getItems(null, mockResponse);
     expect(mockResponse.status).toHaveBeenCalledWith(404);
     done();
   });
