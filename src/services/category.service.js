@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-catch */
+/* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
 const axios = require('axios').default;
 const { Category, Item } = require('../models');
@@ -35,7 +37,6 @@ const createCategory = async (category) => {
     });
     return createdCategory.dataValues;
   } catch (error) {
-    console.log(error);
     throw (error);
   }
 };
@@ -43,6 +44,7 @@ const createCategory = async (category) => {
 const getFeatures = async (category) => {
   try {
     const items = await Item.findAll({ where: { category } });
+    console.log(items);
     const output = {};
     output.features = {};
     output.features.color = [];
@@ -55,7 +57,6 @@ const getFeatures = async (category) => {
     });
     return output;
   } catch (error) {
-    console.log(error);
     throw (error);
   }
 };
