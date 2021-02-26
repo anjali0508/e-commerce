@@ -22,4 +22,14 @@ describe('Create category & Item handler', () => {
     expect(quoteService.createCategory).toHaveBeenCalledWith('phone');
     done();
   });
+  it('should set a status code of 404 along with created error message', async (done) => {
+    jest.spyOn(quoteService, 'createCategory').mockImplementation(() => { throw new Error('error'); });
+    const mockResponse = {
+      status: jest.fn(() => mockResponse),
+      json: jest.fn(),
+    };
+    await quoteHandler.createCategory(null, mockResponse);
+    expect(mockResponse.status).toHaveBeenCalledWith(404);
+    done();
+  });
 });
