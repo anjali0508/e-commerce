@@ -32,8 +32,23 @@ const createCategory = async (category) => {
     description: categoryResponse.data.description,
     items: itemIdList,
   });
-
   return createdCategory.dataValues;
 };
 
-module.exports = { createCategory };
+const getFeatures = async (category) => {
+  const items = await Item.findAll({ where: { category } });
+  const output = {};
+  output.features = {};
+  output.features.color = [];
+  output.features.size = [];
+  output.features.brand = [];
+  items.forEach((item) => {
+    output.features.color.push(item.dataValues.color);
+    output.features.size.push(item.dataValues.size);
+    output.features.brand.push(item.dataValues.brand);
+  });
+  console.log(output);
+  return output;
+};
+
+module.exports = { createCategory, getFeatures };
