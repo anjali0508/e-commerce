@@ -8,7 +8,6 @@ const createCategory = async (category) => {
   try {
     const categoryToAdd = await Item.findAll({ where: { name: `${category}s` } });
     if (categoryToAdd !== undefined) {
-      console.log('lala');
       await Category.destroy({ where: { name: `${category}s` } });
       await Item.destroy({ where: { category } });
     }
