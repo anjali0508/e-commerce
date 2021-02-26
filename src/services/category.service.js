@@ -51,4 +51,15 @@ const getFeatures = async (category) => {
   return output;
 };
 
-module.exports = { createCategory, getFeatures };
+const getItems = async (category, color, size, brand) => {
+  if (category !== undefined && size !== undefined && color !== undefined && brand !== undefined) {
+    const items = await Item.findAll({
+      where: {
+        category: '*', size, color, brand,
+      },
+    });
+    console.log(items);
+  }
+};
+
+module.exports = { createCategory, getFeatures, getItems };

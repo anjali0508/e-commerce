@@ -7,9 +7,19 @@ const createCategory = async (req, res) => {
 };
 
 const getFeatures = async (req, res) => {
-  const { category } = req.query;
+  const {
+    category,
+  } = req.query;
   const features = await categoryService.getFeatures(category);
   res.status(200).send(features);
 };
 
-module.exports = { createCategory, getFeatures };
+const getItems = async (req, res) => {
+  const {
+    category, color, size, brand,
+  } = req.query;
+  const features = await categoryService.getItems(category, color, size, brand);
+  res.status(200).send(features);
+};
+
+module.exports = { createCategory, getFeatures, getItems };
