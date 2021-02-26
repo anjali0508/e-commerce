@@ -6,9 +6,15 @@ const { Category, Item } = require('../models');
 
 const createCategory = async (category) => {
   try {
-    const categoryResponse = await axios.get(`https://backend-evaluation-lgsvu.ondigitalocean.app/category?name=${category}`);
-
+    const categoryToAdd = await Item.findAll({ where: { name: `${category}s` } });
+    if (categoryToAdd !== undefined) {
+      console.log('lala');
+      await Category.destroy({ where: { name: `${category}s` } });
+      await Item.destroy({ where: { category } });
+    }
     const itemIdList = [];
+
+    const categoryResponse = await axios.get(`https://backend-evaluation-lgsvu.ondigitalocean.app/category?name=${category}`);
 
     const cateogoryItemsData = categoryResponse.data.itemMetadata.map(async (item) => {
       itemIdList.push(item.id);
