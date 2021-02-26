@@ -44,7 +44,6 @@ const createCategory = async (category) => {
 const getFeatures = async (category) => {
   try {
     const items = await Item.findAll({ where: { category } });
-    console.log(items);
     const output = {};
     output.features = {};
     output.features.color = [];

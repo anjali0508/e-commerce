@@ -3,10 +3,10 @@ const categoryService = require('./category.service');
 const { Category, Item } = require('../models');
 
 describe('Create Category service', () => {
-  it('should return a list of created category when db execution is successful', async () => {
+  it('should return a list of created category when db execution is successful', async (done) => {
     const axiosResponse = {
       data: {
-        itemMetadata: ['alal'],
+        itemMetadata: ['lala'],
       },
       features: ['lala'],
     };
@@ -21,12 +21,16 @@ describe('Create Category service', () => {
     jest.spyOn(axios, 'get').mockResolvedValue(axiosResponse);
     jest.spyOn(axios, 'get').mockResolvedValue(axiosResponse);
     jest.spyOn(Promise, 'all').mockResolvedValue([{ features: 'lala' }]);
+
     const createSpy = jest.spyOn(Category, 'create');
     const itemCreateSpy = jest.spyOn(Item, 'create');
+
     createSpy.mockResolvedValue(mockResponse);
     itemCreateSpy.mockResolvedValue(mockResponse);
+
     const response = await categoryService.createCategory('phone');
     expect(response).toEqual(mockResponse.dataValues);
+    done();
   });
 });
 
