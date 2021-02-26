@@ -61,16 +61,22 @@ const getFeatures = async (category) => {
 };
 
 const getItems = async (category, color, size, brand) => {
-  let items;
-  if (category !== undefined && size !== undefined && color !== undefined && brand !== undefined) {
-    items = await Item.findAll({
-      where: {
-        category, size, color, brand,
-      },
-    });
-  } else {
-    items = 'This only valid when all the features are given';
+  const whereCondition = {};
+  if (category !== undefined) {
+    whereCondition.category = category;
   }
+  if (color !== undefined) {
+    whereCondition.color = color;
+  }
+  if (size !== undefined) {
+    whereCondition.size = size;
+  }
+  if (brand !== undefined) {
+    whereCondition.brand = brand;
+  }
+  const items = await Item.findAll({
+    where: whereCondition,
+  });
   return items;
 };
 
